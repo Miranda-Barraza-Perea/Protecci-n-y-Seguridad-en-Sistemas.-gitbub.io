@@ -1,0 +1,590 @@
+html_content = """<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unidad 6: Protección y Seguridad en Sistemas</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-inner: #0b1120;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --border: #28354f;
+      
+      /* Paleta de colores para marcos */
+      --c1: #38bdf8; /* Azul Cielo */
+      --c2: #a855f7; /* Púrpura */
+      --c3: #10b981; /* Esmeralda */
+      --c4: #f59e0b; /* Ámbar */
+      --c5: #ec4899; /* Rosa */
+      --c6: #ef4444; /* Rojo */
+      --c7: #06b6d4; /* Cian */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* PORTADA */
+    .cover {
+      min-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: radial-gradient(circle at top right, #1e3a8a 0%, #090d16 55%),
+                  radial-gradient(circle at bottom left, #311042 0%, #090d16 55%);
+      border-bottom: 3px solid var(--c1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-box {
+      max-width: 860px;
+      width: 100%;
+      background: rgba(19, 27, 46, 0.82);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(56, 189, 248, 0.45);
+      border-radius: 22px;
+      padding: 2.8rem 2.2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(56, 189, 248, 0.18);
+    }
+
+    .school-header {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #e2e8f0;
+      margin-bottom: 0.85rem;
+    }
+
+    .subject-tag {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--c1);
+      border: 1px solid var(--c1);
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .cover h1 {
+      font-size: clamp(2rem, 4.5vw, 3.1rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.9rem;
+      background: linear-gradient(90deg, #ffffff, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .meta-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--c2);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .meta-card.teacher {
+      border-left-color: var(--c3);
+    }
+
+    .meta-card h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--c2);
+      margin-bottom: 0.4rem;
+    }
+
+    .meta-card.teacher h3 {
+      color: var(--c3);
+    }
+
+    .meta-card p {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .btn-start {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--c1), #2563eb);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.9rem 2.2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(56, 189, 248, 0.6);
+    }
+
+    /* NAVEGACIÓN */
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: rgba(9, 13, 22, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      background-color: var(--card);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      border-color: var(--c1);
+      color: var(--c1);
+      transform: translateY(-1px);
+    }
+
+    /* CONTENIDO Y MARCOS CON COLORES */
+    main {
+      max-width: 1040px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem 4rem;
+      display: grid;
+      gap: 2.2rem;
+    }
+
+    section.topic-frame {
+      background-color: var(--card);
+      border-radius: 16px;
+      padding: 1.85rem 2.1rem;
+      border: 2px solid var(--border);
+      border-left-width: 9px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    section.topic-frame:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Colores individuales por marco */
+    #t6-1 { border-color: rgba(56, 189, 248, 0.45); border-left-color: var(--c1); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.08); }
+    #t6-1 h2 { color: var(--c1); }
+
+    #t6-2 { border-color: rgba(168, 85, 247, 0.45); border-left-color: var(--c2); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.08); }
+    #t6-2 h2 { color: var(--c2); }
+
+    #t6-3 { border-color: rgba(16, 185, 129, 0.45); border-left-color: var(--c3); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.08); }
+    #t6-3 h2 { color: var(--c3); }
+
+    #t6-4 { border-color: rgba(245, 158, 11, 0.45); border-left-color: var(--c4); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.08); }
+    #t6-4 h2 { color: var(--c4); }
+
+    #t6-5 { border-color: rgba(236, 72, 153, 0.45); border-left-color: var(--c5); box-shadow: 0 8px 25px rgba(236, 72, 153, 0.08); }
+    #t6-5 h2 { color: var(--c5); }
+
+    #t6-6 { border-color: rgba(239, 68, 68, 0.45); border-left-color: var(--c6); box-shadow: 0 8px 25px rgba(239, 68, 68, 0.08); }
+    #t6-6 h2 { color: var(--c6); }
+
+    #t6-7 { border-color: rgba(6, 182, 212, 0.45); border-left-color: var(--c7); box-shadow: 0 8px 25px rgba(6, 182, 212, 0.08); }
+    #t6-7 h2 { color: var(--c7); }
+
+    section.topic-frame h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.9rem;
+    }
+
+    section.topic-frame p {
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.35rem;
+      color: var(--muted);
+    }
+
+    li {
+      margin-bottom: 0.65rem;
+    }
+
+    li strong {
+      color: var(--text);
+    }
+
+    .info-highlight {
+      background-color: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.94rem;
+    }
+
+    .info-highlight strong {
+      color: var(--c4);
+    }
+
+    /* TABLA */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+      background-color: var(--card-inner);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.7rem 0.85rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #060911;
+      color: var(--c4);
+      font-weight: 700;
+    }
+
+    /* SIMULADOR DE CIFRADO */
+    .cipher-box {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1.2rem;
+      background-color: var(--card-inner);
+      padding: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(6, 182, 212, 0.5);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    input, button {
+      font-family: inherit;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+    }
+
+    input {
+      background-color: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      flex: 1;
+      min-width: 200px;
+    }
+
+    input[type="number"] {
+      width: 85px;
+      flex: none;
+    }
+
+    button {
+      background-color: var(--c7);
+      color: #090d16;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button.secondary {
+      background-color: var(--c3);
+    }
+
+    .output {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background-color: #060911;
+      padding: 0.85rem;
+      border-radius: 8px;
+      border: 1px dashed var(--c7);
+      color: #67e8f9;
+      word-break: break-all;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+      background-color: #060911;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PORTADA -->
+  <header class="cover">
+    <div class="cover-box">
+      <div class="school-header">Instituto Tecnológico de Parral (TecNM)</div>
+      <span class="subject-tag">Materia: Sistemas Operativos &bull; Unidad 6</span>
+      <h1>Protección y Seguridad en Sistemas</h1>
+      <p class="cover-subtitle">
+        Guía completa de estudio de los temas 6.1 al 6.7: fundamentos, control de acceso, amenazas y criptografía aplicada.
+      </p>
+
+      <div class="meta-grid">
+        <div class="meta-card teacher">
+          <h3>Docente</h3>
+          <p> Myrna Villegas Gaytán</p>
+        </div>
+        <div class="meta-card">
+          <h3>Integrantes del Equipo</h3>
+          <p>Miranda Barraza &bull; Pablo Roa &bull; Christian Palma</p>
+        </div>
+      </div>
+
+      <a href="#contenido" class="btn-start">Explorar Contenido &darr;</a>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN -->
+  <nav id="contenido" aria-label="Navegación de temas">
+    <a href="#t6-1">6.1 Concepto y objetivos</a>
+    <a href="#t6-2">6.2 Clasificación</a>
+    <a href="#t6-3">6.3 Funciones</a>
+    <a href="#t6-4">6.4 Matrices de acceso</a>
+    <a href="#t6-5">6.5 Protección en el lenguaje</a>
+    <a href="#t6-6">6.6 Validación y amenazas</a>
+    <a href="#t6-7">6.7 Cifrado</a>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+    <!-- 6.1 -->
+    <section id="t6-1" class="topic-frame">
+      <h2>6.1. Concepto y objetivos de protección y seguridad</h2>
+      <p>
+        La <strong>protección</strong> se refiere a los mecanismos internos del sistema operativo que controlan el acceso de programas, procesos o usuarios a los recursos definidos por el sistema. Por su parte, la <strong>seguridad</strong> engloba las medidas y políticas necesarias para defender el sistema contra ataques externos e internos, garantizando la confianza en su operación.
+      </p>
+      <ul>
+        <li><strong>Tríada CIA (Confidencialidad, Integridad y Disponibilidad):</strong> asegurar que la información solo sea vista por personal autorizado, que no sea alterada indebidamente y que los servicios permanezcan accesibles cuando se requieran.</li>
+        <li><strong>Separación entre mecanismo y política:</strong> el <em>mecanismo</em> determina <strong>cómo</strong> se hace cumplir una regla (ej. cifrado o bits de permisos), mientras que la <em>política</em> decide <strong>qué</strong> se permite hacer (ej. quién puede leer un archivo). Esto brinda flexibilidad ante cambios administrativos.</li>
+        <li><strong>Principio de mínimo privilegio:</strong> cada usuario o proceso debe operar únicamente con los permisos estrictamente necesarios para cumplir su tarea, limitando el daño en caso de fallos o compromisos.</li>
+        <li><strong>Prevención de interferencias:</strong> evitar que errores en un proceso afecten la memoria o ejecución de otros procesos concurrentes.</li>
+      </ul>
+    </section>
+
+    <!-- 6.2 -->
+    <section id="t6-2" class="topic-frame">
+      <h2>6.2. Clasificación aplicada a la seguridad</h2>
+      <p>
+        Para resguardar un sistema de cómputo de manera integral, la seguridad se clasifica en niveles complementarios que cubren tanto vulnerabilidades técnicas como factores ambientales y humanos:
+      </p>
+      <ul>
+        <li><strong>Seguridad interna (lógica):</strong> controles implementados directamente en el hardware y el núcleo del sistema operativo (modo kernel vs. modo usuario, aislamiento de memoria virtual, permisos de archivos y autenticación).</li>
+        <li><strong>Seguridad física:</strong> resguardo de las instalaciones, servidores, cableado y centros de datos frente a acceso físico no autorizado, robos, incendios, inundaciones o fallos en el suministro eléctrico (uso de UPS, controles biométricos y cámaras).</li>
+        <li><strong>Seguridad operacional y humana:</strong> procedimientos administrativos, políticas de contraseñas, copias de seguridad periódicas (backups), auditorías de registros (logs) y capacitación del personal para evitar ingeniería social.</li>
+        <li><strong>Seguridad en comunicaciones y red:</strong> protección de los datos en tránsito mediante firewalls, VPNs, segmentación de redes y protocolos cifrados.</li>
+      </ul>
+    </section>
+
+    <!-- 6.3 -->
+    <section id="t6-3" class="topic-frame">
+      <h2>6.3. Funciones del sistema de protección</h2>
+      <p>
+        El sistema de protección actúa como un árbitro constante dentro del sistema operativo, verificando cada solicitud de acceso a los recursos compartidos de hardware y software:
+      </p>
+      <ul>
+        <li><strong>Protección de memoria:</strong> mediante la Unidad de Administración de Memoria (MMU), registros base/límite y tablas de páginas, impide que un proceso lea o sobrescriba el espacio de direcciones de otro proceso o del kernel.</li>
+        <li><strong>Protección de la CPU:</strong> utiliza interrupciones de reloj (temporizadores) para evitar que un proceso acapare el procesador indefinidamente, garantizando la planificación justa en sistemas multiprogramados.</li>
+        <li><strong>Protección de Entrada/Salida (E/S):</strong> restringe las instrucciones privilegiadas de E/S exclusivamente al <em>modo kernel</em>; los programas de usuario deben solicitar acceso a dispositivos mediante llamadas al sistema supervisadas.</li>
+        <li><strong>Protección de archivos y objetos:</strong> controla las operaciones válidas (lectura <code>r</code>, escritura <code>w</code>, ejecución <code>x</code>) sobre archivos, directorios, semáforos y sockets según la identidad (UID/GID) del solicitante.</li>
+      </ul>
+    </section>
+
+    <!-- 6.4 -->
+    <section id="t6-4" class="topic-frame">
+      <h2>6.4. Implantación de matrices de acceso</h2>
+      <p>
+        El modelo abstracto de protección se representa mediante una <strong>matriz de acceso</strong>, donde las filas corresponden a los <em>dominios</em> (usuarios, roles o procesos) y las columnas a los <em>objetos</em> (archivos, impresoras, bases de datos). Cada celda especifica los derechos permitidos.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Dominio / Objeto</th>
+            <th>Archivo_Config.txt</th>
+            <th>Impresora_1</th>
+            <th>Base_Datos</th>
+            <th>Dominio Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Admin</strong></td>
+            <td>Leer, Escribir, Borrar</td>
+            <td>Usar, Configurar</td>
+            <td>Leer, Escribir, Admin</td>
+            <td>Control total</td>
+          </tr>
+          <tr>
+            <td><strong>Usuario_Estándar</strong></td>
+            <td>Leer</td>
+            <td>Usar</td>
+            <td>Leer, Escribir</td>
+            <td>Sin acceso</td>
+          </tr>
+          <tr>
+            <td><strong>Invitado</strong></td>
+            <td>Sin acceso</td>
+            <td>Usar</td>
+            <td>Sin acceso</td>
+            <td>Sin acceso</td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li><strong>Listas de Control de Acceso (ACL):</strong> almacenan la matriz por <em>columnas</em>; cada objeto mantiene una lista de qué usuarios tienen qué permisos sobre él (usado en sistemas de archivos modernos como NTFS y ext4).</li>
+        <li><strong>Listas de Capacidades (Capabilities):</strong> almacenan la matriz por <em>filas</em>; cada dominio posee un conjunto de "fichas" o boletos infalsificables que le otorgan derechos sobre determinados objetos.</li>
+        <li><strong>Tabla global o control basado en roles (RBAC):</strong> agrupa permisos en roles organizacionales para facilitar la administración en sistemas con miles de usuarios.</li>
+      </ul>
+    </section>
+
+    <!-- 6.5 -->
+    <section id="t6-5" class="topic-frame">
+      <h2>6.5. Protección basada en el lenguaje</h2>
+      <p>
+        A medida que los sistemas de software crecieron en complejidad, se volvió necesario complementar la protección del hardware con mecanismos integrados en los lenguajes de programación y sus entornos de ejecución:
+      </p>
+      <ul>
+        <li><strong>Comprobación estática y dinámica de tipos:</strong> impide operaciones ilegales sobre datos (como tratar un entero como un puntero de memoria) y verifica los límites de los arreglos en tiempo de ejecución.</li>
+        <li><strong>Gestión automática y segura de memoria:</strong> lenguajes como Java, C# o Rust eliminan errores críticos de C/C++ como desbordamientos de búfer (buffer overflows), fugas de memoria y punteros colgantes.</li>
+        <li><strong>Entornos aislados (Sandboxing) y bytecode:</strong> máquinas virtuales (como la JVM) verifican el código antes de ejecutarlo y aplican un <em>Security Manager</em> que restringe el acceso al disco o a la red según el origen del código.</li>
+        <li><strong>Encapsulamiento y visibilidad:</strong> modificadores como <code>private</code> o <code>protected</code> restringen qué módulos pueden modificar el estado interno de un objeto.</li>
+      </ul>
+    </section>
+
+    <!-- 6.6 -->
+    <section id="t6-6" class="topic-frame">
+      <h2>6.6. Validación y amenazas al sistema</h2>
+      <p>
+        La <strong>validación</strong> consiste en verificar que toda entrada de datos, identidad de usuario o estado del sistema cumpla con criterios estrictos antes de ser procesado, evitando fallos de seguridad.
+      </p>
+      <ul>
+        <li><strong>Amenazas de software y malware:</strong> virus, gusanos, troyanos, ransomware, spyware y rootkits diseñados para robar información, secuestrar recursos u ocultar intrusiones en el kernel.</li>
+        <li><strong>Explotación de vulnerabilidades:</strong> desbordamientos de búfer, inyección de código (SQL Injection, XSS), escalada de privilegios y ataques de día cero (Zero-Day).</li>
+        <li><strong>Ataques internos y de red:</strong> bombas lógicas, puertas traseras (backdoors), suplantación de identidad (phishing/spoofing) y Denegación de Servicio (DoS / DDoS).</li>
+        <li><strong>Defensas y validación:</strong> autenticación multifactor (MFA), sanitización estricta de entradas, consultas parametrizadas, firewalls, sistemas de detección de intrusos (IDS) y parches continuos.</li>
+      </ul>
+      <div class="info-highlight">
+        <strong>Regla de oro de validación:</strong> Nunca confiar en los datos provenientes del usuario o de la red; validar siempre longitud, tipo, formato y rango tanto en el cliente como en el servidor.
+      </div>
+    </section>
+
+    <!-- 6.7 -->
+    <section id="t6-7" class="topic-frame">
+      <h2>6.7. Cifrado</h2>
+      <p>
+        El <strong>cifrado (criptografía)</strong> transforma información legible (<em>texto plano</em>) en una secuencia incomprensible (<em>texto cifrado</em>) mediante algoritmos matemáticos y claves, asegurando la confidencialidad e integridad incluso si los datos son interceptados.
+      </p>
+      <ul>
+        <li><strong>Criptografía simétrica (clave secreta):</strong> usa la misma clave para cifrar y descifrar. Es muy rápida para grandes volúmenes de datos (ej. <strong>AES-256</strong>, ChaCha20).</li>
+        <li><strong>Criptografía asimétrica (clave pública):</strong> emplea un par de claves matemáticas: una <em>pública</em> para cifrar o verificar y una <em>privada</em> para descifrar o firmar (ej. <strong>RSA</strong>, ECC).</li>
+        <li><strong>Funciones Hash y Firmas Digitales:</strong> algoritmos de una sola vía (como <strong>SHA-256</strong>) que generan una huella digital única para verificar que un archivo o contraseña no haya sido alterado.</li>
+        <li><strong>Protocolos seguros:</strong> combinación de ambos métodos en canales como <strong>HTTPS/TLS</strong>, SSH y cifrado completo de disco (BitLocker, LUKS).</li>
+      </ul>
+
+      <div class="cipher-box">
+        <strong>Laboratorio Interactivo: Cifrado por Sustitución (César)</strong>
+        <div class="controls">
+          <input id="plainText" type="text" placeholder="Escribe un mensaje..." value="Seguridad en Sistemas Operativos" />
+          <label for="shiftKey">Desplazamiento:</label>
+          <input id="shiftKey" type="number" value="3" min="-25" max="25" />
+          <button type="button" onclick="runCipher(true)">Cifrar</button>
+          <button type="button" class="secondary" onclick="runCipher(false)">Descifrar</button>
+        </div>
+        <div class="output" id="cipherOutput">Resultado: Vhjxulgdg hq Vlvwhpdv Rshudwlyrv</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Instituto Tecnológico de Parral (TecNM)</strong> &bull; Materia: Sistemas Operativos<br>
+    Docente: Myrna Villegas Gaytán &bull; Equipo: Miranda Barraza, Pablo Roa y Christian Palma
+  </footer>
+
+  <script>
+    function runCipher(encrypt) {
+      const text = document.getElementById('plainText').value;
+      let shift = parseInt(document.getElementById('shiftKey').value, 10) || 0;
+      if (!encrypt) shift = -shift;
+
+      const result = text.replace(/[a-zA-Z]/g, (char) => {
+        const base = char <= 'Z' ? 65 : 97;
+        return String.fromCharCode(((char.charCodeAt(0) - base + shift) % 26 + 26) % 26 + base);
+      });
+
+      document.getElementById('cipherOutput').textContent = 'Resultado: ' + result;
+    }
+  </script>
+</body>
+</html>"""
+
+with open("unidad6_proteccion_seguridad.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("Archivo HTML actualizado con portada completa.")
